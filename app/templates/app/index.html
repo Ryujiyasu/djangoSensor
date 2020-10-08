@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    <title>djangoSensor</title>
+  </head>
+  <body>
+<div class="container">
+    <div class="m-5">
+        <h1>DjangoSensorApp</h1>
+    </div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="#photo1" class="nav-link active" data-toggle="tab">人感センサー</a>
+    </li>
+    <li class="nav-item">
+      <a href="#photo2" class="nav-link" data-toggle="tab">温度センサー</a>
+    </li>
+    <li class="nav-item">
+      <a href="#photo3" class="nav-link" data-toggle="tab">声センサー</a>
+    </li>
+    <li class="nav-item">
+      <a href="#photo4" class="nav-link" data-toggle="tab">総合値</a>
+    </li>
+  </ul>
+    <div class="tab-content">
+  <div id="photo1" class="tab-pane active">
+    <canvas id="myChart1"></canvas>
+  </div>
+  <div id="photo2" class="tab-pane">
+    <canvas id="myChart2"></canvas>
+  </div>
+  <div id="photo3" class="tab-pane">
+    <canvas id="myChart3"></canvas>
+  </div>
+  <div id="photo4" class="tab-pane">
+    <canvas id="myChart4"></canvas>
+  </div>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+</div>
+    <!-- Optional JavaScript -->
+    <!-- Popper.js first, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <script>
+  var ctx = document.getElementById("myChart1");
+  var myChart1 = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
+      datasets: [
+        {
+          label: '最高気温(度）',
+          data: [35, 34, 37, 35, 34, 35, 34, 25],
+          borderColor: "rgba(255,0,0,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        },
+        {
+          label: '最低気温(度）',
+          data: [25, 27, 27, 25, 26, 27, 25, 21],
+          borderColor: "rgba(0,0,255,1)",
+          backgroundColor: "rgba(0,0,0,0)"
+        }
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: '気温（8月1日~8月7日）'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 40,
+            suggestedMin: 0,
+            stepSize: 10,
+            callback: function(value, index, values){
+              return  value +  '度'
+            }
+          }
+        }]
+      },
+    }
+  });
+  var ctx = document.getElementById("myChart2");
+  var myChart2 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
+      datasets: [
+        {
+          label: 'A店 来客数',
+          data: [62, 65, 93, 85, 51, 66, 47],
+          backgroundColor: "rgba(219,39,91,0.5)"
+        },{
+          label: 'B店 来客数',
+          data: [55, 45, 73, 75, 41, 45, 58],
+          backgroundColor: "rgba(130,201,169,0.5)"
+        },{
+          label: 'C店 来客数',
+          data: [33, 45, 62, 55, 31, 45, 38],
+          backgroundColor: "rgba(255,183,76,0.5)"
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '支店別 来客数'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 100,
+            suggestedMin: 0,
+            stepSize: 10,
+            callback: function(value, index, values){
+              return  value +  '人'
+            }
+          }
+        }]
+      },
+    }
+    });
+var ctx = document.getElementById("myChart3");
+  var myChart3 = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ["A型", "O型", "B型", "AB型"],
+      datasets: [{
+          backgroundColor: [
+              "#BB5179",
+              "#FAFF67",
+              "#58A27C",
+              "#3C00FF"
+          ],
+          data: [38, 31, 21, 10]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '血液型 割合'
+      }
+    }
+  });
+  var ctx = document.getElementById("myChart4");
+    var myChart4 = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ["英語", "数学", "国語", "理科", "社会"],
+            datasets: [{
+                label: 'Aさん',
+                data: [92, 72, 86, 74, 86],
+                backgroundColor: 'RGBA(225,95,150, 0.5)',
+                borderColor: 'RGBA(225,95,150, 1)',
+                borderWidth: 1,
+                pointBackgroundColor: 'RGB(46,106,177)'
+            }, {
+                label: 'Bさん',
+                data: [73, 95, 80, 87, 79],
+                backgroundColor: 'RGBA(115,255,25, 0.5)',
+                borderColor: 'RGBA(115,255,25, 1)',
+                borderWidth: 1,
+                pointBackgroundColor: 'RGB(46,106,177)'
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '試験成績'
+            },
+            scale:{
+                ticks:{
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                    stepSize: 10,
+                    callback: function(value, index, values){
+                        return  value +  '点'
+                    }
+                }
+            }
+        }
+    });
+  </script>
+
+  </body>
+</html>
